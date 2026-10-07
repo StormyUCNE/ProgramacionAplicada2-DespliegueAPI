@@ -12,7 +12,12 @@ export const registro = async (req, res, next) => {
     const usuario = await prisma.usuario.create({
       data: { nombre, email, password: hash, rol: rol || "usuario" }
     })
-    res.status(201).json({ id: usuario.id, nombre: usuario.nombre, rol: usuario.rol })
+    const token = jwt.sign(
+      { id: usuario.id, email: usuario.email, rol: usuario.rol },
+      process.env.JWT_SECRET,
+      { expiresIn: "24h" }
+    )
+    res.status(201).json({ token})
   } catch (err) { next(err) }
 }
 
