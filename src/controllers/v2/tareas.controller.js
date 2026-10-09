@@ -37,10 +37,6 @@ export const deleteTarea = async (req, res, next) => {
     const tarea = await prisma.tarea.findUnique({ where: { id } })
     if (!tarea) return res.status(404).json({ error: "No encontrada" })
 
-    if (req.usuario.rol !== "admin" && tarea.usuarioId !== req.usuario.id) {
-      return res.status(403).json({ error: "Acceso denegado" })
-    }
-
     await prisma.tarea.delete({ where: { id } })
     res.json({ mensaje: "Eliminada" })
   } catch (err) { next(err) }
