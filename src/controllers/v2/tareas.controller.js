@@ -6,7 +6,7 @@ export const getTareas = async (req, res, next) => {
     const tareas = await prisma.tarea.findMany({ where })
     res.json(tareas)
   } catch (err) { next(err) }
-}
+} 
 
 export const createTarea = async (req, res, next) => {
   try {
@@ -22,10 +22,6 @@ export const updateTarea = async (req, res, next) => {
     const id = parseInt(req.params.id)
     const tarea = await prisma.tarea.findUnique({ where: { id } })
     if (!tarea) return res.status(404).json({ error: "No encontrada" })
-
-    if (req.usuario.rol !== "admin" && tarea.usuarioId !== req.usuario.id) {
-      return res.status(403).json({ error: "Acceso denegado" })
-    }
 
     const actualizada = await prisma.tarea.update({
       where: { id },
