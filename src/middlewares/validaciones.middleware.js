@@ -1,5 +1,5 @@
 
-export const validarRegistro =(re, res, next)=>{
+export const validarRegistro =(req, res, next)=>{
     if(!req.body.nombre || req.body.nombre.trim() === "")
         return res.status(400).json({error: "Nombre es un campo requerido"});
     if(!req.body.email || req.body.email.trim() === "")
@@ -21,7 +21,7 @@ export const validarRegistro =(re, res, next)=>{
     next();
 }
 
-export const validarLogin =(re, res, next)=>{
+export const validarLogin =(req, res, next)=>{
     if(!req.body.email || req.body.email.trim() === "")
         return res.status(400).json({error: "Email es un campo requerido"});
     if(!req.body.password || req.body.password.trim() === "")
@@ -31,7 +31,7 @@ export const validarLogin =(re, res, next)=>{
     next();
 }
 
-export const validarCreacionTarea =(re, res, next)=>{
+export const validarCreacionTarea =(req, res, next)=>{
     if(!req.body.titulo)
         return res.status(400).json({error: "Título es un campo requerido"});
     if(req.body.titulo.trim().length() > 25)
