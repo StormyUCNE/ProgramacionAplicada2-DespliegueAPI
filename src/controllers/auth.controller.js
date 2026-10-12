@@ -13,11 +13,11 @@ export const registro = async (req, res, next) => {
       data: { nombre, email, password: hash, rol: rol || "usuario" }
     })
     const token = jwt.sign(
-      { id: usuario.id, email: usuario.email, rol: usuario.rol },
+      {user: {id: usuario.id, nombre: usuario.nombre, rol: usuario.rol }},
       process.env.JWT_SECRET,
-      { expiresIn: "24h" }
+      { expiresIn: "3m" }
     )
-    res.status(201).json({ token, user:{id: usuario.id, nombre: usuario.nombre, email: usuario.email, rol: usuario.rol}})
+    res.status(201).json({ token })
   } catch (err) { next(err) }
 }
 
@@ -31,10 +31,10 @@ export const login = async (req, res, next) => {
     if (!valido) return res.status(401).json({ error: "Credenciales inválidas" })
 
     const token = jwt.sign(
-      { id: usuario.id, email: usuario.email, rol: usuario.rol },
+      {user: {id: usuario.id, nombre: usuario.nombre, rol: usuario.rol }},
       process.env.JWT_SECRET,
-      { expiresIn: "24h" }
+      { expiresIn: "3m" }
     )
-    res.json({ token, user:{id: usuario.id, nombre: usuario.nombre, email: usuario.email, rol: usuario.rol}})
+    res.json({ token});
   } catch (err) { next(err) }
 }
