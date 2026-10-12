@@ -15,7 +15,7 @@ export const registro = async (req, res, next) => {
     const token = jwt.sign(
       {user: {id: usuario.id, nombre: usuario.nombre, rol: usuario.rol }},
       process.env.JWT_SECRET,
-      { expiresIn: "3m" }
+      { expiresIn: "24h" }
     )
     res.status(201).json({ token })
   } catch (err) { next(err) }
@@ -33,7 +33,7 @@ export const login = async (req, res, next) => {
     const token = jwt.sign(
       {user: {id: usuario.id, nombre: usuario.nombre, rol: usuario.rol }},
       process.env.JWT_SECRET,
-      { expiresIn: "3m" }
+      { expiresIn: "24h" }
     )
     res.json({ token});
   } catch (err) { next(err) }
