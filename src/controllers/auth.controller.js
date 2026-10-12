@@ -15,7 +15,7 @@ export const registro = async (req, res, next) => {
     const token = jwt.sign(
       {id: usuario.id, nombre: usuario.nombre, rol: usuario.rol },
       process.env.JWT_SECRET,
-      { expiresIn: "24" }
+      { expiresIn: "24h" }
     )
     res.status(201).json({ token })
   } catch (err) { next(err) }
